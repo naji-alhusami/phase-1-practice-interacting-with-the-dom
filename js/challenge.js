@@ -28,7 +28,6 @@ window.onload = function () {
   let clickedButton = {};
   heartButton.addEventListener("click", () => {
     if (clickedButton[counter]) {
-      // clickedButton[counter]=clickedButton;
       clickedButton[counter] = clickedButton[counter] + 1;
     } else {
       clickedButton[counter] = 1;
@@ -41,7 +40,7 @@ window.onload = function () {
     } else {
       const newList = document.createElement("li");
       newList.setAttribute("id", counter);
-      newList.textContent = `${counter} has ${clickedButton[counter]} likes `;
+      newList.textContent = `${counter} has been liked ${clickedButton[counter]} time `;
       list.appendChild(newList);
     }
   });
@@ -57,12 +56,14 @@ window.onload = function () {
       plusButton.disabled = true;
       minusButton.disabled = true;
       submitButton.disabled = true;
+      heartButton.disabled = true;
       clearInterval(interval);
     } else {
       pauseButton.textContent = "pause";
       plusButton.removeAttribute("disabled");
       minusButton.disabled = false;
       submitButton.disabled = false;
+      heartButton.disabled = false;
       startInterval();
     }
   });
@@ -70,10 +71,15 @@ window.onload = function () {
   const commentInput = document.getElementById("comment-input");
   const comments = document.getElementById("list");
   const form = document.querySelector("form");
+  const listOfComments = document.createElement("ul");
+  comments.appendChild(listOfComments);
+  listOfComments.setAttribute("id", "li-lists");
+  const liLists = document.getElementById("li-lists");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    comments.innerHTML = commentInput.value;
-    console.log(commentInput);
-  });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      liLists.innerHTML += `<li>${commentInput.value}</li>`;
+      commentInput.value = "";
+    });
+
 };
